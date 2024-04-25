@@ -11,7 +11,8 @@ const fontFamily = StyleSheet.create({
 
 const commonStyles = StyleSheet.create({
   container: {
-    padding: 18,
+    paddingHorizontal: 18,
+    flex: 1,
   },
   row: {
     flexDirection: 'row',

@@ -6,14 +6,13 @@ import commonStyles from '../styles/commonStyles';
 import IMAGES from '../assets/images';
 import { WIDTH } from '../constant';
 import { backgroundColors } from '../theme/Colors';
+import Tag from './Tag';
 
 const Card: React.FC<any> = ({ item }) => {
   let type: string = 'grass';
   if (item > 3) {
     type = 'fire';
   }
-
-  console.log('item', type);
 
   return (
     <View style={{ ...styles.card, backgroundColor: backgroundColors[type] }}>
@@ -24,8 +23,8 @@ const Card: React.FC<any> = ({ item }) => {
         <Text style={commonStyles.number}>#0001</Text>
         <Text style={commonStyles.title}>Bulbasaur</Text>
         <View style={commonStyles.row}>
-          {/* <Tag type={type} />
-          <Tag type="poison" /> */}
+          <Tag type={type} />
+          <Tag type="poison" />
         </View>
       </View>
 
@@ -37,7 +36,7 @@ const Card: React.FC<any> = ({ item }) => {
           <Image
             style={styles.image}
             source={{
-              uri: `https://pokeres.bastionbot.org/images/pokemon/${item}.png`,
+              uri: `https://pokeres.bastionbot.org/images/pokemon/${1}.png`,
             }}
           />
         </View>

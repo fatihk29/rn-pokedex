@@ -1,13 +1,5 @@
 import React, { FC } from 'react';
-import {
-  StatusBar,
-  Text,
-  View,
-  TouchableOpacity,
-  ImageBackground,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import { StatusBar, Text, View, ImageBackground, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 // project imports
@@ -62,9 +54,10 @@ const MainPage: FC<any> = () => {
           </View>
         </View>
       </ImageBackground>
-      <View style={{ ...commonStyles.container, paddingBottom: 50, marginTop: 10 }}>
+      <Text>{120 / 137}</Text>
+      <View style={{ ...commonStyles.container, marginTop: 10 }}>
         <FlatList
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 30 }}
           showsVerticalScrollIndicator={false}
           data={pokemons}
           renderItem={({ item }) => <Card item={item} />}

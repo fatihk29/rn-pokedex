@@ -20,28 +20,11 @@ interface ICOLORS {
   btn: any;
 }
 
-interface PokemonColors {
-  bug: string;
-  dark: string;
-  dragon: string;
-  electric: string;
-  fairy: string;
-  fighting: string;
-  fire: string;
-  flying: string;
-  ghost: string;
-  grass: string;
-  ground: string;
-  ice: string;
-  normal: string;
-  poison: string;
-  psychic: string;
-  rock: string;
-  steel: string;
-  water: string;
-}
+type ColorsSection = {
+  [key: string]: string;
+};
 
-const colors: PokemonColors = {
+const colors: ColorsSection = {
   bug: '#8CB230',
   dark: '#58575F',
   dragon: '#0F6AC0',
@@ -62,28 +45,11 @@ const colors: PokemonColors = {
   water: '#417D9A',
 };
 
-interface PokemonBackgroundColors {
-  bug: string;
-  dark: string;
-  dragon: string;
-  electric: string;
-  fairy: string;
-  fighting: string;
-  fire: string;
-  flying: string;
-  ghost: string;
-  grass: string;
-  ground: string;
-  ice: string;
-  normal: string;
-  poison: string;
-  psychic: string;
-  rock: string;
-  steel: string;
-  water: string;
-}
+type BGColorsSection = {
+  [key: string]: string;
+};
 
-const backgroundColors: PokemonBackgroundColors = {
+const backgroundColors: BGColorsSection = {
   bug: '#8BD674',
   dark: '#6F6E78',
   dragon: '#7383B9',
