@@ -1,14 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import {
-  getCharaterList,
-  getCharaterById,
-  getCharaterByIdWithComics,
-  getComicList,
-  getComicById,
-  getComicByIdWithCharacters,
-  getComicByIdWithCreators,
-} from '../../services/productApi';
+import { getAllPokemon, getPokemonByName, getPokemonEvolutionByID } from '../../services/productApi';
 
 export interface Resource<T> {
   data: T | null | undefined;
@@ -26,32 +18,20 @@ export function emptyResource<T>() {
 }
 
 interface IProduct {
-  charaterList: Resource<any>;
-  characterById: Resource<any>;
-  charaterByIdWithComics: Resource<any>;
-  comicList: Resource<any>;
-  comicById: Resource<any>;
-  comicByIdWithCharacters: Resource<any>;
-  comicByIdWithCreators: Resource<any>;
+  allPokemon: Resource<any>;
+  pokemonByName: Resource<any>;
 }
 
 const initialState: IProduct = {
-  charaterList: emptyResource(),
-  characterById: emptyResource(),
-  charaterByIdWithComics: emptyResource(),
-  comicList: emptyResource(),
-  comicById: emptyResource(),
-  comicByIdWithCharacters: emptyResource(),
-  comicByIdWithCreators: emptyResource(),
+  allPokemon: emptyResource(),
+  pokemonByName: emptyResource(),
 };
 
-const getCharaterListAT = createAsyncThunk('product/charList', async (load: string, thunkAPI) => {
-  console.log('asd49 :>> ');
+const getAllPokemonAT = createAsyncThunk('product/all', async (load: string, thunkAPI) => {
   try {
-    const response = await getCharaterList(load);
+    const response = await getAllPokemon(load);
     if (response) {
-      // console.log('response :>> ', response.data.results);
-      return response.data.results;
+      return response;
     } else {
       return thunkAPI.rejectWithValue('no product data');
     }
@@ -60,11 +40,11 @@ const getCharaterListAT = createAsyncThunk('product/charList', async (load: stri
   }
 });
 
-const getCharaterByIdAT = createAsyncThunk('product/charid', async (load: string, thunkAPI) => {
+const getPokemonByNameAT = createAsyncThunk('product/byname', async (load: string, thunkAPI) => {
   try {
-    const response = await getCharaterById(load);
+    const response = await getPokemonByName(load);
     if (response) {
-      return response.data.results;
+      return response;
     } else {
       return thunkAPI.rejectWithValue('no product data');
     }
@@ -73,27 +53,11 @@ const getCharaterByIdAT = createAsyncThunk('product/charid', async (load: string
   }
 });
 
-const getCharaterByIdWithComicsAT = createAsyncThunk(
-  'product/charidWComic',
-  async (load: string, thunkAPI) => {
-    try {
-      const response = await getCharaterByIdWithComics(load);
-      if (response) {
-        return response;
-      } else {
-        return thunkAPI.rejectWithValue('no product data');
-      }
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  },
-);
-
-const getComicListAT = createAsyncThunk('comicList', async (load: string, thunkAPI) => {
+const getPokemonEvolutionAT = createAsyncThunk('product/evolution', async (load: string, thunkAPI) => {
   try {
-    const response = await getComicList(load);
+    const response = await getPokemonEvolutionByID(load);
     if (response) {
-      return response.data.results;
+      return response;
     } else {
       return thunkAPI.rejectWithValue('no product data');
     }
@@ -102,50 +66,6 @@ const getComicListAT = createAsyncThunk('comicList', async (load: string, thunkA
   }
 });
 
-const getComicByIdAT = createAsyncThunk('comicId', async (load: string, thunkAPI) => {
-  try {
-    const response = await getComicById(load);
-    if (response) {
-      return response.data.results;
-    } else {
-      return thunkAPI.rejectWithValue('no product data');
-    }
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
-  }
-});
-
-const getComicByIdWithCharactersAT = createAsyncThunk(
-  'comicIdWChar',
-  async (load: string, thunkAPI) => {
-    try {
-      const response = await getComicByIdWithCharacters(load);
-      if (response) {
-        return response;
-      } else {
-        return thunkAPI.rejectWithValue('no product data');
-      }
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  },
-);
-
-const getComicByIdWithCreatorsAT = createAsyncThunk(
-  'comicIdWCreators',
-  async (load: string, thunkAPI) => {
-    try {
-      const response = await getComicByIdWithCreators(load);
-      if (response) {
-        return response;
-      } else {
-        return thunkAPI.rejectWithValue('no product data');
-      }
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  },
-);
 
 export const productsSlice = createSlice({
   name: 'product',
@@ -153,146 +73,64 @@ export const productsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     // charaterList start
-    builder.addCase(getCharaterListAT.pending, (state, _) => {
-      state.charaterList.pending = true;
-      state.charaterList.data = null;
-      state.charaterList.err = null;
+    builder.addCase(getAllPokemonAT.pending, (state, _) => {
+      state.allPokemon.pending = true;
+      state.allPokemon.data = null;
+      state.allPokemon.err = null;
     });
-    builder.addCase(getCharaterListAT.fulfilled, (state, action) => {
-      state.charaterList.data = action.payload;
-      state.charaterList.err = null;
-      state.charaterList.pending = false;
+    builder.addCase(getAllPokemonAT.fulfilled, (state, action) => {
+      state.allPokemon.data = action.payload;
+      state.allPokemon.err = null;
+      state.allPokemon.pending = false;
     });
-    builder.addCase(getCharaterListAT.rejected, (state, action) => {
-      state.charaterList.err = action.error.message;
-      state.charaterList.data = null;
-      state.charaterList.pending = false;
+    builder.addCase(getAllPokemonAT.rejected, (state, action) => {
+      state.allPokemon.err = action?.error?.message;
+      state.allPokemon.data = null;
+      state.allPokemon.pending = false;
     });
     // charaterList end
-    // characterById start
-    builder.addCase(getCharaterByIdAT.pending, (state, _) => {
-      state.characterById.pending = true;
-      state.characterById.data = null;
-      state.characterById.err = null;
+    builder.addCase(getPokemonByNameAT.pending, (state, _) => {
+      state.pokemonByName.pending = true;
+      state.pokemonByName.data = null;
+      state.pokemonByName.err = null;
     });
-    builder.addCase(getCharaterByIdAT.fulfilled, (state, action) => {
-      state.characterById.data = action.payload;
-      state.characterById.err = null;
-      state.characterById.pending = false;
+    builder.addCase(getPokemonByNameAT.fulfilled, (state, action) => {
+      state.pokemonByName.data = action.payload;
+      state.pokemonByName.err = null;
+      state.pokemonByName.pending = false;
     });
-    builder.addCase(getCharaterByIdAT.rejected, (state, action) => {
-      state.characterById.err = action.error.message;
-      state.characterById.data = null;
-      state.characterById.pending = false;
+    builder.addCase(getPokemonByNameAT.rejected, (state, action) => {
+      state.pokemonByName.err = action?.error?.message;
+      state.pokemonByName.data = null;
+      state.pokemonByName.pending = false;
     });
-    // characterById end
-    // charaterByIdWithComics start
-    builder.addCase(getCharaterByIdWithComicsAT.pending, (state, _) => {
-      state.charaterByIdWithComics.pending = true;
-      state.charaterByIdWithComics.data = null;
-      state.charaterByIdWithComics.err = null;
+    // EVOLUTION
+    builder.addCase(getPokemonEvolutionAT.pending, (state, _) => {
+      state.pokemonByName.pending = true;
+      state.pokemonByName.data = null;
+      state.pokemonByName.err = null;
     });
-    builder.addCase(getCharaterByIdWithComicsAT.fulfilled, (state, action) => {
-      state.charaterByIdWithComics.data = action.payload;
-      state.charaterByIdWithComics.err = null;
-      state.charaterByIdWithComics.pending = false;
+    builder.addCase(getPokemonEvolutionAT.fulfilled, (state, action) => {
+      state.pokemonByName.data = action.payload;
+      state.pokemonByName.err = null;
+      state.pokemonByName.pending = false;
     });
-    builder.addCase(getCharaterByIdWithComicsAT.rejected, (state, action) => {
-      state.charaterByIdWithComics.err = action.error.message;
-      state.charaterByIdWithComics.data = null;
-      state.charaterByIdWithComics.pending = false;
+    builder.addCase(getPokemonEvolutionAT.rejected, (state, action) => {
+      state.pokemonByName.err = action?.error?.message;
+      state.pokemonByName.data = null;
+      state.pokemonByName.pending = false;
     });
-    // charaterByIdWithComics end
-    // comicList start
-    builder.addCase(getComicListAT.pending, (state, _) => {
-      state.comicList.pending = true;
-      state.comicList.data = null;
-      state.comicList.err = null;
-    });
-    builder.addCase(getComicListAT.fulfilled, (state, action) => {
-      state.comicList.data = action.payload;
-      state.comicList.err = null;
-      state.comicList.pending = false;
-    });
-    builder.addCase(getComicListAT.rejected, (state, action) => {
-      state.comicList.err = action.error.message;
-      state.comicList.data = null;
-      state.comicList.pending = false;
-    });
-    // comicList end
-    // comicById start
-    ///
-    builder.addCase(getComicByIdAT.pending, (state, _) => {
-      state.comicById.pending = true;
-      state.comicById.data = null;
-      state.comicById.err = null;
-    });
-    builder.addCase(getComicByIdAT.fulfilled, (state, action) => {
-      state.comicById.data = action.payload;
-      state.comicById.err = null;
-      state.comicById.pending = false;
-    });
-    builder.addCase(getComicByIdAT.rejected, (state, action) => {
-      state.comicById.err = action.error.message;
-      state.comicById.data = null;
-      state.comicById.pending = false;
-    });
-    // comicById end
-    // comicByIdWithCharacters start
-    builder.addCase(getComicByIdWithCharactersAT.pending, (state, _) => {
-      state.comicByIdWithCharacters.pending = true;
-      state.comicByIdWithCharacters.data = null;
-      state.comicByIdWithCharacters.err = null;
-    });
-    builder.addCase(getComicByIdWithCharactersAT.fulfilled, (state, action) => {
-      state.comicByIdWithCharacters.data = action.payload;
-      state.comicByIdWithCharacters.err = null;
-      state.comicByIdWithCharacters.pending = false;
-    });
-    builder.addCase(getComicByIdWithCharactersAT.rejected, (state, action) => {
-      state.comicByIdWithCharacters.err = action.error.message;
-      state.comicByIdWithCharacters.data = null;
-      state.comicByIdWithCharacters.pending = false;
-    });
-    // comicByIdWithCharacters end
-    // comicByIdWithCreators start
-    builder.addCase(getComicByIdWithCreatorsAT.pending, (state, _) => {
-      state.comicByIdWithCreators.pending = true;
-      state.comicByIdWithCreators.data = null;
-      state.comicByIdWithCreators.err = null;
-    });
-    builder.addCase(getComicByIdWithCreatorsAT.fulfilled, (state, action) => {
-      state.comicByIdWithCreators.data = action.payload;
-      state.comicByIdWithCreators.err = null;
-      state.comicByIdWithCreators.pending = false;
-    });
-    builder.addCase(getComicByIdWithCreatorsAT.rejected, (state, action) => {
-      state.comicByIdWithCreators.err = action.error.message;
-      state.comicByIdWithCreators.data = null;
-      state.comicByIdWithCreators.pending = false;
-    });
-    // comicByIdWithCreators end
   },
 });
 
 export const productActions = {
-  getCharaterListAT,
-  getCharaterByIdAT,
-  getCharaterByIdWithComicsAT,
-  getComicListAT,
-  getComicByIdAT,
-  getComicByIdWithCharactersAT,
-  getComicByIdWithCreatorsAT,
+  getAllPokemonAT,
+  getPokemonByNameAT
 };
 
 export const productsSelectors = {
-  charaterList: (state: any) => state.product.charaterList,
-  characterById: (state: any) => state.product.characterById,
-  charaterByIdWithComics: (state: any) => state.product.charaterByIdWithComics,
-  comicList: (state: any) => state.product.comicList,
-  comicById: (state: any) => state.product.comicById,
-  comicByIdWithCharacters: (state: any) => state.product.comicByIdWithCharacters,
-  comicByIdWithCreators: (state: any) => state.product.comicByIdWithCreators,
+  allPokemon: (state: any) => state.product.allPokemon,
+  pokemonByName: (state: any) => state.product.pokemonByName,
 };
 
 export default productsSlice.reducer;

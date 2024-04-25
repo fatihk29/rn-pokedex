@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import md5 from 'md5';
 
-const baseUrl = 'https://gateway.marvel.com/v1/public/';
+const baseUrl = 'https://pokeapi.co/api/v2/';
 
 const axiosClient = axios.create({
   baseURL: baseUrl,

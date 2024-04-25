@@ -9,9 +9,9 @@ import store, { persistor } from './src/store';
 function App(): React.JSX.Element {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <AppNavigator />
-      </PersistGate>
+      {/* <PersistGate persistor={persistor}> */}
+      <AppNavigator />
+      {/* </PersistGate> */}
     </Provider>
   );
 }

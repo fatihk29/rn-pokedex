@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { StatusBar, Text, View, ImageBackground, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 // project imports
 import PageLayout from '../../layout/PageLayout';
@@ -17,11 +18,25 @@ import IconBtn from '../../components/IconBtn';
 import TextInputComp from '../../components/TextInput';
 import SearchSVG from '../../assets/icons/SearchSVG';
 import Card from '../../components/Card';
+import { productActions, productsSelectors } from '../../store/slices/productsSlice';
+import store from '../../store';
 
 const MainPage: FC<any> = () => {
   const navigation = useNavigation() as any;
 
   const pokemons = [1, 2, 3, 4, 5, 6, 7];
+
+  const getData = useCallback(() => {
+    store.dispatch(productActions.getPokemonByNameAT('pidgey'));
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
+  const data = useSelector(productsSelectors.pokemonByName);
+
+  console.log('datas', data.data);
 
   return (
     <PageLayout>

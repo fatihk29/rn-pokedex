@@ -7,13 +7,13 @@ const endPoints = {
   comicId: 'comics',
 };
 
-// /v1/public/characters
-export const getCharaterList = async (load: string): Promise<any> => {
-  console.log('getCharaterList :>> ', load);
+export const getAllPokemon = async (offset: string): Promise<any> => {
+  console.log('getCharaterList :>> ', offset);
   try {
     const response = await axiosClient.get(
-      `/characters?offset=0&${load ? `nameStartsWith=${load}` : ''}&limit=6&${QUERY}`,
+      `pokemon?limit=20&offset=${offset}`,
     );
+    // console.log('response', response.data)
     if (response?.data) {
       return Promise.resolve(response.data);
     } else {
@@ -24,43 +24,13 @@ export const getCharaterList = async (load: string): Promise<any> => {
   }
 };
 
-// /v1/public/characters/{characterId}
-export const getCharaterById = async (characterId: string): Promise<any> => {
-  try {
-    const response = await axiosClient.get(`/characters/${characterId}?&${QUERY}`);
-    // console.log('response', response?.data)
-    if (response?.data) {
-      return Promise.resolve(response.data);
-    } else {
-      return Promise.reject(response?.data);
-    }
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
-
-// /v1/public/characters/{characterId}/comics
-export const getCharaterByIdWithComics = async (characterId: string): Promise<any> => {
-  try {
-    const response = await axiosClient.get(`${endPoints.characterId}/${characterId}/comics`);
-    // console.log('response', response?.data)
-    if (response?.data) {
-      return Promise.resolve(response.data);
-    } else {
-      return Promise.reject(response?.data);
-    }
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
-
-// /v1/public/comics
-export const getComicList = async (load: string): Promise<any> => {
+export const getPokemonByName = async (name: string): Promise<any> => {
+  console.log('name :>> ', name);
   try {
     const response = await axiosClient.get(
-      `/comics?offset=0&${load ? `titleStartsWith=${load}` : ''}&limit=6&${QUERY}`,
+      `pokemon/${name}`,
     );
-    // console.log('response', response?.data)
+    // console.log('response', response.data)
     if (response?.data) {
       return Promise.resolve(response.data);
     } else {
@@ -71,11 +41,13 @@ export const getComicList = async (load: string): Promise<any> => {
   }
 };
 
-// /v1/public/comics/{comicId}
-export const getComicById = async (comicId: string): Promise<any> => {
+export const getPokemonEvolutionByID = async (id: string): Promise<any> => {
+  console.log('name :>> ', id);
   try {
-    const response = await axiosClient.get(`/comics/${comicId}?&${QUERY}`);
-    // console.log('response', response?.data)
+    const response = await axiosClient.get(
+      `evolution-chain/${id}`,
+    );
+    // console.log('response', response.data)
     if (response?.data) {
       return Promise.resolve(response.data);
     } else {
@@ -86,32 +58,4 @@ export const getComicById = async (comicId: string): Promise<any> => {
   }
 };
 
-// /v1/public/comics/{comicId}/characters
-export const getComicByIdWithCharacters = async (comicId: string): Promise<any> => {
-  try {
-    const response = await axiosClient.get(`${endPoints.comicId}/${comicId}/characters`);
-    // console.log('response', response?.data)
-    if (response?.data) {
-      return Promise.resolve(response.data);
-    } else {
-      return Promise.reject(response?.data);
-    }
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
 
-// /v1/public/comics/{comicId}/creators
-export const getComicByIdWithCreators = async (comicId: string): Promise<any> => {
-  try {
-    const response = await axiosClient.get(`${endPoints.comicId}/${comicId}/creators`);
-    // console.log('response', response?.data)
-    if (response?.data) {
-      return Promise.resolve(response.data);
-    } else {
-      return Promise.reject(response?.data);
-    }
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};

@@ -4,7 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // project imports
-import generalCVSlice from './slices/productsSlice';
+import productsSlice from './slices/productsSlice';
 
 const persistConfig: any = {
   key: 'root',
@@ -12,7 +12,7 @@ const persistConfig: any = {
 };
 
 const reducers = combineReducers({
-  general: generalCVSlice,
+  product: productsSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
