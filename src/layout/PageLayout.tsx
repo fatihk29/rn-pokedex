@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
 // project imports
-import { COLORS } from '../theme';
+import { COLORS } from '../theme/Colors';
 
 const PageLayout: FC<any> = ({ children, bgColor }) => {
   return (

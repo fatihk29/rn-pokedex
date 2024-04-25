@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 // project imports
 
 // import ArrowLeftPress from '../Pressable/ArrowLeftPress';
-import { COLORS } from '../../theme';
+import { COLORS } from '../../theme/Colors';
 import { APP_ROUTER } from '../../navigation/APP_ROUTER';
 
 interface IScreenHeader {
