@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import React, { ReactNode } from 'react';
+import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
 
 // project imports
 import { textColor } from '../../theme/Colors';
@@ -9,9 +9,9 @@ import DragonSVG from '../../assets/icons/DragonSVG';
 import DarkSVG from '../../assets/icons/DarkSVG';
 
 interface IconBtnProps {
-  children?: any;
-  onPress?: any;
-  style?: any;
+  children?: ReactNode;
+  onPress?: () => void;
+  style?: StyleProp<any>;
   name?: any;
   width?: any;
   height?: any;

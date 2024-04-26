@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 // project imports
 import AppNavigator from './src/navigation';
 import store, { persistor } from './src/store';
+import { productActions } from './src/store/slices/productsSlice';
 
 function App(): React.JSX.Element {
   return (

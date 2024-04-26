@@ -8,12 +8,11 @@ const endPoints = {
 };
 
 export const getAllPokemon = async (offset: string): Promise<any> => {
-  console.log('getCharaterList :>> ', offset);
+  console.log('getCharaterList offset :>> ', offset);
   try {
     const response = await axiosClient.get(
-      `pokemon?limit=20&offset=${offset}`,
+      `pokemon?limit=7&offset=${offset}`,
     );
-    // console.log('response', response.data)
     if (response?.data) {
       return Promise.resolve(response.data);
     } else {
@@ -25,7 +24,6 @@ export const getAllPokemon = async (offset: string): Promise<any> => {
 };
 
 export const getPokemonByName = async (name: string): Promise<any> => {
-  console.log('name :>> ', name);
   try {
     const response = await axiosClient.get(
       `pokemon/${name}`,

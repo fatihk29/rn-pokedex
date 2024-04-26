@@ -28,7 +28,7 @@ const commonStyles = StyleSheet.create({
     color: textColor.grey,
   },
   title: {
-    fontSize: 26,
+    fontSize: 22,
     color: textColor.white,
     // ...fontFamily.bold,
   },

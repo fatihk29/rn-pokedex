@@ -22,21 +22,19 @@ import { productActions, productsSelectors } from '../../store/slices/productsSl
 import store from '../../store';
 
 const MainPage: FC<any> = () => {
-  const navigation = useNavigation() as any;
+  const [offset, setOffset] = React.useState<number>(0);
 
-  const pokemons = [1, 2, 3, 4, 5, 6, 7];
+  const loadMoreData = () => {
+    setOffset(prevState => prevState + 20);
+  };
 
   const getData = useCallback(() => {
-    store.dispatch(productActions.getPokemonByNameAT('pidgey'));
+    store.dispatch(productActions.getAllPokemonAT('1'));
   }, []);
 
   useEffect(() => {
     getData();
-  }, [getData]);
-
-  const data = useSelector(productsSelectors.pokemonByName);
-
-  console.log('datas', data.data);
+  }, []);
 
   return (
     <PageLayout>
@@ -69,16 +67,28 @@ const MainPage: FC<any> = () => {
           </View>
         </View>
       </ImageBackground>
-      <Text>{120 / 137}</Text>
       <View style={{ ...commonStyles.container, marginTop: 10 }}>
+        <Maincomp />
+      </View>
+    </PageLayout>
+  );
+};
+
+const Maincomp: FC<any> = ({}) => {
+  const { data } = useSelector(productsSelectors.allPokemon);
+
+  return (
+    <React.Fragment>
+      {data && (
         <FlatList
           contentContainerStyle={{ paddingBottom: 30 }}
           showsVerticalScrollIndicator={false}
-          data={pokemons}
+          data={data}
           renderItem={({ item }) => <Card item={item} />}
+          // onEndReached={loadMoreData}
         />
-      </View>
-    </PageLayout>
+      )}
+    </React.Fragment>
   );
 };
 

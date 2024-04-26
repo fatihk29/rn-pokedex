@@ -19,19 +19,21 @@ export function emptyResource<T>() {
 
 interface IProduct {
   allPokemon: Resource<any>;
-  pokemonByName: Resource<any>;
+  pokemonByName: any;
 }
 
 const initialState: IProduct = {
   allPokemon: emptyResource(),
-  pokemonByName: emptyResource(),
+  pokemonByName: {
+    data: {}
+  },
 };
 
 const getAllPokemonAT = createAsyncThunk('product/all', async (load: string, thunkAPI) => {
   try {
     const response = await getAllPokemon(load);
     if (response) {
-      return response;
+      return response.results;
     } else {
       return thunkAPI.rejectWithValue('no product data');
     }
@@ -90,19 +92,17 @@ export const productsSlice = createSlice({
     });
     // charaterList end
     builder.addCase(getPokemonByNameAT.pending, (state, _) => {
-      state.pokemonByName.pending = true;
-      state.pokemonByName.data = null;
-      state.pokemonByName.err = null;
+      // state.pokemonByName.pending = true;
+      // state.pokemonByName.data = null;
+      // state.pokemonByName.err = null;
     });
     builder.addCase(getPokemonByNameAT.fulfilled, (state, action) => {
-      state.pokemonByName.data = action.payload;
-      state.pokemonByName.err = null;
-      state.pokemonByName.pending = false;
+      state.pokemonByName.data[action.meta.arg] = action.payload
     });
     builder.addCase(getPokemonByNameAT.rejected, (state, action) => {
-      state.pokemonByName.err = action?.error?.message;
-      state.pokemonByName.data = null;
-      state.pokemonByName.pending = false;
+      // state.pokemonByName.err = action?.error?.message;
+      // state.pokemonByName.data = null;
+      // state.pokemonByName.pending = false;
     });
     // EVOLUTION
     builder.addCase(getPokemonEvolutionAT.pending, (state, _) => {
